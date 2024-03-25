@@ -8,21 +8,67 @@
 </head>
 <body>
 
-<header>
-    <h1>dwp Interactive Viewer</h1>
-</header>
+    <header>
+        <img src="img/dwpLogoWhiteSmall.png" style="vertical-align: middle;">
+        <h1>dwp | 3D Printing Workshop for Young Designers</h1>
+    </header>
+
 <div class="instructions">
-    <h2>How to Use the Viewer</h2>
-    <p>Use your mouse to interact with the 3D model:</p>
-    <ul>
-        <li><b>Rotate:</b> Click and drag with your mouse.</li>
-        <li><b>Zoom:</b> Scroll up or down.</li>
-        <li><b>Pan:</b> Right-click and drag to move the model.</li>
-    </ul>
+    <h2>What to expect:</h2>
+    <p>dwp is thrilled to extend an exclusive invitation to the inspired minds of tomorrow to join us for a transformative two-day workshop on the art and science of 3D printing, right in the heart of our innovative Bangkok studio. This hands-on experience is crafted to unleash the potential within young designers, offering them an opportunity to immerse themselves in the world of digital design and three-dimensional creation.</p>
+    
+    <p>Guided by dwp's seasoned professional designers, our young participants will dive into the vibrant possibilities of 3D modeling with the intuitive TinkerCAD software, where imagination meets the precision of design. It's not just about learning the ropes; it's about weaving your own design story.</p>
+    
+    <p>As each participant breathes life into their ideas, they will witness their visions materialize layer by layer with our state-of-the-art Bambolab 3D printers. The magic doesn't end with the last print layer; we take pride in showcasing these budding talents. Each creator will curate a personal website, a digital gallery using Luma Lab AI, to proudly display their crafted pieces to friends, family, and the world.</p> 
+
+    <p>Don't miss this chance to be a part of a creative journey where technology meets imagination, and design meets innovation. Join us at dwp, where we don't just build designs; we build designers.</p>
 </div>
 <div id="luma-lab-viewer">
     <canvas></canvas>
 </div>
+<div class="instructions">
+    <h2>Software and Hardware Mastery: The Core of Our 3D Printing Workshop</h2>
+    <p>At the heart of our workshop lies a hands-on exploration of cutting-edge design tools that will shape the creators of tomorrow. Here is a glimpse into the pivotal elements that will guide our young designers through this transformative experience:</p>
+</div>
+
+<div class="instructions">
+    <h2>Hands-on Project:</h2>
+    <p>Our journey begins with the mastery of TinkerCAD, a user-friendly CAD software that bridges the gap between abstract concepts and tangible creations. Young designers will navigate the intuitive interface of this software, unlocking their potential to design intricate 3D models with precision and creativity.</p>
+</div>
+<iframe src="https://www.tinkercad.com/embed/d1HHYqOd26h?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+<div class="instructions">
+    <h2>From Software to Substance:</h2>
+    <p>The leap from digital design to physical form is where the magic unfolds. Participants will gain firsthand experience with the Bambolab 3D printer, a marvel of technology that translates their virtual designs into real-world objects. This hands-on interaction with the printer will not only familiarize them with the printing process but also with the technical nuances of transforming a digital blueprint into a 3D masterpiece.</p>
+</div>
+
+<div class="instructions">
+    <h2>Problem-Solving and Critical Thinking:</h2>
+    <p>As our young designers sculpt their visions within TinkerCAD, they will encounter challenges that demand innovative solutions. This is where problem-solving skills and critical thinking are honed, guiding them through complex design considerations and teaching them to navigate the intricacies of 3D design with analytical prowess.</p>
+</div>
+
+<div class="instructions">
+    <h2>Collaborative Learning:</h2>
+    <p>Innovation thrives on collaboration. Our design studio is a vibrant hub where ideas meet and visions converge. Attendees will be encouraged to share their concepts, provide feedback, and co-create with peers, fostering an environment where collaborative learning is paramount.</p>
+</div>
+
+<div class="instructions">
+    <h2>What to Expect:</h2>
+    <h3>Day 1 - Project Setup and Design:</h3>
+    <p>The inaugural day of our workshop is an odyssey into the realm of digital creation. We initiate with an immersive orientation to TinkerCAD—unveiling its potential and navigating its interface. Young designers will learn to:</p>
+    <ul>
+        <li>*Manipulate shapes and structures to create 3D models.</li>
+        <li>*Utilize various tools within TinkerCAD to enhance their design.</li>
+        <li>*Apply basic principles of 3D design, such as volume, balance, and symmetry.</li>
+        <li>*Finalizing designs and preparing them for the 3D printing process.</li>
+        <li>*Commencing the printing process and witnessing the layer-by-layer creation of their designs.</li>
+        <li>*Create a personal website using intuitive AI-driven tools.</li>
+        <li>*Upload images and write descriptive narratives of their design process.</li>
+        <li>*Customize their web pages to reflect their personal style and design ethos.</li>
+    </ul>
+    <p>The workshop culminates with a showcase, where each young designer presents their printed model alongside their digital portfolio. This celebratory session is not only a showcase of their newfound skills but also a moment to applaud their journey from novices to design thinkers.</p>
+    <p>In this one days at dwp, designers will not only learn about 3D printing but will also experience the joy of creation and the pride of sharing their work, setting the stage for a future filled with innovation and design excellence.</p>
+</div>
+
 
 <script type="importmap">
 {
@@ -48,25 +94,33 @@
     });
 
     function resizeRendererToDisplaySize(renderer) {
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        const needResize = canvas.width !== width || canvas.height !== height;
-        if (needResize) {
-            renderer.setSize(width, height, false);
-        }
-        return needResize;
+    const aspectRatio = 16 / 9;
+    const width = container.clientWidth;
+    // Ensure height maintains the aspect ratio based on width
+    let height = width / aspectRatio;
+
+    // Check if the canvas needs resizing
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+        renderer.setSize(width, height, false);
+        // Adjust the camera's aspect ratio and update its projection matrix
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
     }
+    return needResize;
+}
+
 
     let scene = new Scene();
 
-    let camera = new PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.z = 2;
+    let camera = new PerspectiveCamera(75, container.clientWidth / container.clientHeight, 1, 1000);
+    camera.position.z =2.2;
 
     let controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
 
     let splat = new LumaSplatsThree({
-        source: 'https://lumalabs.ai/capture/a7431ec2-8bff-468e-97ff-91817c12b81e'
+        source: 'https://lumalabs.ai/capture/43e50500-312c-4bea-8784-060545a73b21'
     });
     scene.add(splat);
 
